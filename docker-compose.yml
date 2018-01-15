@@ -16,7 +16,7 @@ services:
   collectd:
     image: vimagick/collectd
     volumes:
-      - ./collectd/data:/etc/collectd
+      - ./collectd:/etc/collectd
     links:
       - influxdb
     restart: always
