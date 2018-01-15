@@ -1,6 +1,14 @@
 version: "3"
 
 services:
+  collectd:
+    image: vimagick/collectd
+    volumes:
+      - ./collectd/data:/etc/collectd
+    pid: host
+    net: host
+    restart: always
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
