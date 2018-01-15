@@ -39,6 +39,8 @@ services:
       - ./grafana/data:/var/lib/grafana
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
+    env_file:
+      - 'env.grafana'
 
 networks:
   default:
