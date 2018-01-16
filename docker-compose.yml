@@ -83,3 +83,10 @@ services:
       - grafana_data:/var/lib/grafana
     env_file:
       - .env.grafana
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
