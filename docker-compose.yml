@@ -2,27 +2,26 @@ version: "3"
 
 services:
   influxdb:
-    image: influxdb:latest
+    image: influxdb:1.0
     container_name: influxdb
     ports:
       - "8083:8083"
       - "8086:8086"
-      - "8090:8090"
-      - "25826:25826"
+      - "25826:25826/udp"
     env_file:
       - .env.influxdb
     volumes:
       - ./influxdb/data:/var/lib/influxdb
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      - ./influxdb/types.db:/usr/share/collectd/types.db:ro
 
   collectd:
-    image: vimagick/collectd
+    image: fr3nd/collectd
+    privileged: true
+    network_mode: host
     volumes:
+      - /proc:/mnt/proc:ro
       - ./collectd:/etc/collectd
-    links:
-      - influxdb
-    restart: always
-    environment:
-      HOST_NAME: server.strangelab.co.uk
 
   grafana:
     image: grafana/grafana:latest
@@ -38,8 +37,3 @@ services:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
     env_file:
       - .env.grafana
-
-networks:
-  default:
-    external:
-      name: nginx-proxy
