@@ -17,13 +17,14 @@ services:
       - ./influxdb/types.db:/usr/share/collectd/types.db:ro
 
   collectd:
-    image: fr3nd/collectd
+    build: .
     privileged: true
     network_mode: host
     restart: always
     volumes:
       - /proc:/mnt/proc:ro
-      - ./collectd:/etc/collectd
+      - ./collectd/collectd.conf:/etc/collectd/collectd.conf
+      - ./collectd/docker-plugin:/usr/share/collectd/docker-plugin
 
   grafana:
     image: grafana/grafana:latest
