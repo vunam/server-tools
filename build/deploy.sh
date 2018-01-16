@@ -3,7 +3,7 @@ ssh -v circleci@136.144.176.117 << EOF
 
 echo '1. Updating sources'
 cd /server/tools/
-git clean -fdx --exclude=".env"
+git clean -fdx --exclude=".env" --exclude=".env.grafana"
 git fetch
 git checkout --force master
 git pull origin master
