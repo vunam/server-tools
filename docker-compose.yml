@@ -4,10 +4,6 @@ volumes:
     prometheus_data: {}
     grafana_data: {}
 
-networks:
-  front-tier:
-  back-tier:
-
 services:
   prometheus:
     image: prom/prometheus:v2.0.0
@@ -24,17 +20,16 @@ services:
     links:
       - cadvisor:cadvisor
       - alertmanager:alertmanager
+      - nodeexporter:nodeexporter
     depends_on:
       - cadvisor
-    networks:
-      - back-tier
     restart: always
     deploy:
       placement:
         constraints:
           - node.hostname == localhost
 
-  node-exporter:
+  nodeexporter:
     image: prom/node-exporter
     volumes:
       - /proc:/host/proc:ro
@@ -47,8 +42,6 @@ services:
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
     ports:
       - 9100:9100
-    networks:
-      - back-tier
     restart: always
     deploy:
       mode: global
@@ -59,8 +52,6 @@ services:
       - 9093:9093
     volumes:
       - ./alertmanager/:/etc/alertmanager/
-    networks:
-      - back-tier
     restart: always
     command:
       - '-config.file=/etc/alertmanager/config.yml'
@@ -78,8 +69,6 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     ports:
       - 8080:8080
-    networks:
-      - back-tier
     restart: always
     deploy:
       mode: global
@@ -92,8 +81,5 @@ services:
       - 3000:3000
     volumes:
       - grafana_data:/var/lib/grafana
-    networks:
-      - back-tier
-      - front-tier
     env_file:
       - .env.grafana
