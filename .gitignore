@@ -4,3 +4,4 @@
 .env.grafana
 grafana/data
 influxdb/data
+prometheus_data
