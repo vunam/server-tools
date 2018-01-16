@@ -4,6 +4,7 @@ services:
   influxdb:
     image: influxdb:1.0
     container_name: influxdb
+    restart: always
     ports:
       - "8083:8083"
       - "8086:8086"
@@ -19,6 +20,7 @@ services:
     image: fr3nd/collectd
     privileged: true
     network_mode: host
+    restart: always
     volumes:
       - /proc:/mnt/proc:ro
       - ./collectd:/etc/collectd
