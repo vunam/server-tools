@@ -1,5 +1,6 @@
 .idea/
 .DS_Store
 .env
+.env.grafana
 grafana/data
 influxdb/data
