@@ -79,6 +79,7 @@ services:
       - prometheus
     ports:
       - ${PORT}:${PORT}
+    restart: always
     volumes:
       - ./grafana_data:/var/lib/grafana
     env_file:
