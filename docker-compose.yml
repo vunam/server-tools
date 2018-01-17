@@ -24,6 +24,8 @@ services:
       placement:
         constraints:
           - node.hostname == localhost
+    networks:
+      - back-tier
 
   nodeexporter:
     image: prom/node-exporter
@@ -41,6 +43,8 @@ services:
     restart: always
     deploy:
       mode: global
+    networks:
+      - back-tier
 
   alertmanager:
     image: prom/alertmanager
@@ -56,6 +60,9 @@ services:
       placement:
         constraints:
           - node.hostname == localhost
+    networks:
+      - back-tier
+
   cadvisor:
     image: google/cadvisor
     volumes:
@@ -68,6 +75,8 @@ services:
     restart: always
     deploy:
       mode: global
+    networks:
+      - back-tier
 
   grafana:
     image: grafana/grafana
@@ -82,8 +91,12 @@ services:
       - .env.grafana
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
+    networks:
+      - front-tier
+      - back-tier
 
 networks:
-  default:
+  back-tier:
+  front-tier:
     external:
       name: nginx-proxy
