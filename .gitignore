@@ -2,6 +2,5 @@
 .DS_Store
 .env
 .env.grafana
-grafana/data
-influxdb/data
+grafana_data
 prometheus_data
