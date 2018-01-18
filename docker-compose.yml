@@ -79,6 +79,9 @@ services:
       - .env.grafana
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
+      GF_SERVER_DOMAIN: ${VIRTUAL_HOST}
+      GF_SERVER_ROOT_URL: https://${VIRTUAL_HOST}
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
     networks:
       - front-tier
       - back-tier
