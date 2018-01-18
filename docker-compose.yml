@@ -86,7 +86,7 @@ services:
 networks:
   back-tier:
     external:
-      name: local-net
+      name: local
   front-tier:
     external:
       name: nginx-proxy
